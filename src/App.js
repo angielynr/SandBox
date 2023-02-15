@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { Box, CssBaseline } from "@mui/material";
 
-function App() {
+import TopNavigation from "./components/Navigation/TopNavigation";
+import LeftNavigation from "./components/Navigation/LeftNavigation";
+
+import { Toolbar } from "@mui/material";
+import { Outlet } from "react-router-dom";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <TopNavigation />
+      <LeftNavigation />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Toolbar />
+        <Outlet />
+      </Box>
+    </Box>
   );
 }
-
-export default App;
