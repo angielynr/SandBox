@@ -17,10 +17,11 @@ import {
   AppRegistrationTwoTone,
   Inventory2TwoTone,
   PeopleTwoTone,
+  AccountTree,
 } from "@mui/icons-material";
 
 const LeftNavigation = () => {
-  const drawerWidth = 240;
+  const drawerWidth = 250;
 
   const navigate = useNavigate();
 
@@ -51,11 +52,20 @@ const LeftNavigation = () => {
           </ListItem>
 
           <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate("/quiz")}>
+            <ListItemButton onClick={() => navigate("/project")}>
+              <ListItemIcon>
+                <AccountTree />
+              </ListItemIcon>
+              <ListItemText primary={"Project Portal"} />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => navigate("/productlist")}>
               <ListItemIcon>
                 <QuizTwoTone />
               </ListItemIcon>
-              <ListItemText primary={"Quiz App"} />
+              <ListItemText primary={"Springboot Products API"} />
             </ListItemButton>
           </ListItem>
 

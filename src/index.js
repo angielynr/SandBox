@@ -5,9 +5,11 @@ import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import QuizApp from "./pages/QuizApp";
+import QuizApp from "./pages/ProductList";
 import StarWarsAPI from "./pages/StarWarsAPI";
 import Todolist from "./pages/Todolist";
+import Project from "./pages/Project";
+import ProductList from "./pages/ProductList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +18,8 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="home" element={<Home />} />
-          <Route path="quiz" element={<QuizApp />} />
+          <Route path="project" element={<Project />} />
+          <Route path="productlist" element={<ProductList />} />
           <Route path="starwarsapi" element={<StarWarsAPI />} />
           <Route path="todolist" element={<Todolist />} />
         </Route>
