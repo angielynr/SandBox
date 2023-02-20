@@ -4,9 +4,9 @@ const getAll = () => {
   return http.get("/products");
 };
 
-// const get = id => {
-//   return http.get(`/tutorials/${id}`);
-// };
+const getProductById = (id) => {
+  return http.get(`/products/${id}`);
+};
 
 const create = (data) => {
   return http.post("/products", data);
@@ -31,7 +31,7 @@ const remove = (id) => {
 const ProductService = {
   getAll,
   create,
-  // get,
+  getProductById,
   update,
   remove,
   // removeAll,
