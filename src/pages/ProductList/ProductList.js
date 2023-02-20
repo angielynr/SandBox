@@ -15,6 +15,8 @@ import {
   TextField,
   TextareaAutosize,
 } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useParams } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -34,24 +36,41 @@ const ProductList = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
+  const { enqueueSnackbar } = useSnackbar();
+  const { id } = useParams();
 
   useEffect(() => {
-    getProducts();
+    loadProducts();
   }, [refreshKey]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const getProducts = () => {
-    ProductService.getAll().then((response) => {
+  const loadProducts = async () => {
+    await ProductService.getAll().then((response) => {
       setProducts(response.data);
+    });
+  };
+
+  const deleteProduct = (id) => {
+    ProductService.remove(id);
+    setRefreshKey((oldKey) => oldKey + 1);
+    enqueueSnackbar("Deleted Successfully", {
+      autoHideDuration: 3000,
+      variant: "info",
     });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const productData = { name: name, description: description, price: price };
+
     ProductService.create(productData);
+    enqueueSnackbar("Added Successfully", {
+      autoHideDuration: 3000,
+      variant: "success",
+    });
 
     setName("");
     setDescription("");
@@ -65,7 +84,6 @@ const ProductList = () => {
       <Button variant="contained" sx={{ mb: "10px" }} onClick={handleOpen}>
         Add Product
       </Button>
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -120,13 +138,20 @@ const ProductList = () => {
               sx={{ mt: "10px" }}
               onClick={handleSubmit}
             >
-              ADD PRODUCT
+              Submit
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{ mt: "10px", ml: "10px" }}
+              onClick={handleClose}
+            >
+              Cancel
             </Button>
           </Box>
         </Box>
       </Modal>
 
-      <TableContainer component={Paper} style={{ maxHeight: 600 }}>
+      <TableContainer component={Paper}>
         <Table aria-label="simple table" stickyHeader>
           <TableHead>
             <TableRow>
@@ -134,6 +159,7 @@ const ProductList = () => {
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Price</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -147,6 +173,21 @@ const ProductList = () => {
                 </TableCell>
                 <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="outlined"
+                    sx={{ mr: "5px" }}
+                    onClick={handleOpen}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => deleteProduct(product.id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

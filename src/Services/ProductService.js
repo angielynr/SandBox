@@ -12,13 +12,13 @@ const create = (data) => {
   return http.post("/products", data);
 };
 
-// const update = (id, data) => {
-//   return http.put(`/tutorials/${id}`, data);
-// };
+const update = (id, data) => {
+  return http.put(`/products/${id}`, data);
+};
 
-// const remove = id => {
-//   return http.delete(`/tutorials/${id}`);
-// };
+const remove = (id) => {
+  return http.delete(`/products/${id}`);
+};
 
 // const removeAll = () => {
 //   return http.delete(`/tutorials`);
@@ -32,8 +32,8 @@ const ProductService = {
   getAll,
   create,
   // get,
-  // update,
-  // remove,
+  update,
+  remove,
   // removeAll,
   // findByTitle
 };

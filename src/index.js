@@ -5,7 +5,6 @@ import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
-import QuizApp from "./pages/ProductList/ProductList";
 import StarWarsAPI from "./pages/StarWarsAPI/StarWarsAPI";
 import Todolist from "./pages/Todolist/Todolist";
 import Project from "./pages/Project/Project";
