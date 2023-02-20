@@ -4,12 +4,12 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home";
-import QuizApp from "./pages/ProductList";
-import StarWarsAPI from "./pages/StarWarsAPI";
-import Todolist from "./pages/Todolist";
-import Project from "./pages/Project";
-import ProductList from "./pages/ProductList";
+import Home from "./pages/Home/Home";
+import QuizApp from "./pages/ProductList/ProductList";
+import StarWarsAPI from "./pages/StarWarsAPI/StarWarsAPI";
+import Todolist from "./pages/Todolist/Todolist";
+import Project from "./pages/Project/Project";
+import ProductList from "./pages/ProductList/ProductList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

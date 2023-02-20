@@ -1,4 +1,4 @@
-import Input from "../components/TodoList/Input";
+import Input from "./Input";
 // import { Box } from "@mui/material";
 
 const Todolist = (props) => {

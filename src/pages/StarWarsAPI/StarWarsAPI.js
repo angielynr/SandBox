@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UsersList from "../components/StarWarsAPI/UsersList";
+import UsersList from "../StarWarsAPI/UsersList";
 
 import { Button } from "@mui/material";
 
