@@ -45,11 +45,6 @@ const ProductList = () => {
     if (id) getProductById(id);
   }, [id]);
 
-  const handleOpenCreateProductModal = () => setOpenCreateProductModal(true);
-  const handleCloseCreateProductModal = () => setOpenCreateProductModal(false);
-  const handleOpenEditProductModal = () => setOpenEditProductModal(true);
-  const handleCloseEditProductModal = () => setOpenEditProductModal(false);
-
   const loadProducts = async () => {
     await ProductService.getAll().then((response) => {
       setProducts(response.data);
@@ -57,9 +52,9 @@ const ProductList = () => {
   };
 
   const getProductById = async (id) => {
-    await ProductService.getProductById(id).then((response) => {
-      setProducts(response.data);
-    });
+    const result = await ProductService.getProductById(id);
+    setProducts(result.data);
+    console.log(result.data);
   };
 
   const deleteProduct = async (id) => {
@@ -74,8 +69,12 @@ const ProductList = () => {
   const handleCreateSubmit = async (event) => {
     event.preventDefault();
 
-    const productData = { name: name, description: description, price: price };
-
+    const productData = {
+      id,
+      name,
+      price,
+      description,
+    };
     await ProductService.create(productData);
     enqueueSnackbar("Added Successfully", {
       autoHideDuration: 3000,
@@ -91,26 +90,29 @@ const ProductList = () => {
 
   const handleEditSubmit = async (event) => {
     event.preventDefault();
+    console.log(typeof id);
 
-    // const editData = {
-    //   id: products.id,
-    //   name: products.name,
-    //   description: products.description,
-    //   price: products.price,
-    // };
+    const productData = {
+      id,
+      name,
+      price,
+      description,
+    };
 
-    await ProductService.update(products.id, products);
+    await ProductService.update(id, productData);
     enqueueSnackbar("Updated Successfully", {
       autoHideDuration: 3000,
       variant: "success",
     });
 
-    // setName("");
-    // setDescription("");
-    // setPrice("");
     setRefreshKey((oldKey) => oldKey + 1);
     setOpenCreateProductModal(false);
   };
+
+  const handleOpenCreateProductModal = () => setOpenCreateProductModal(true);
+  const handleCloseCreateProductModal = () => setOpenCreateProductModal(false);
+  const handleOpenEditProductModal = () => setOpenEditProductModal(true);
+  const handleCloseEditProductModal = () => setOpenEditProductModal(false);
 
   return (
     <>

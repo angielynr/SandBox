@@ -13,7 +13,6 @@ export function EditProductModal({
   handleClose,
   style,
   name,
-  e,
   setName,
   price,
   setPrice,
