@@ -14,6 +14,7 @@ const create = (data) => {
 
 const update = (id, data) => {
   return http.put(`/products/${id}`, data);
+  // return http.put("/products/" + id, data);
 };
 
 const remove = (id) => {

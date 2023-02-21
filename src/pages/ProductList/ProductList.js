@@ -12,7 +12,6 @@ import {
   Button,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useParams } from "react-router-dom";
 import { EditProductModal } from "./EditProductModal";
 
 const style = {
@@ -35,26 +34,33 @@ const ProductList = () => {
   const [price, setPrice] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
-  const { id } = useParams();
+  const [selectedId, setSelectedId] = useState(0);
+
+  const productData = {
+    selectedId,
+    name,
+    price,
+    description,
+  };
 
   useEffect(() => {
     loadProducts();
   }, [refreshKey]);
 
-  useEffect(() => {
-    if (id) getProductById(id);
-  }, [id]);
+  // useEffect(() => {
+  //   if (selectedId) getProductById(selectedId);
+  // }, []);
+
+  // const getProductById = async (id) => {
+  //   const result = await ProductService.getProductById(id);
+  //   setProducts(result.data);
+  //   console.log("getProductById", result.data);
+  // };
 
   const loadProducts = async () => {
     await ProductService.getAll().then((response) => {
       setProducts(response.data);
     });
-  };
-
-  const getProductById = async (id) => {
-    const result = await ProductService.getProductById(id);
-    setProducts(result.data);
-    console.log(result.data);
   };
 
   const deleteProduct = async (id) => {
@@ -69,12 +75,6 @@ const ProductList = () => {
   const handleCreateSubmit = async (event) => {
     event.preventDefault();
 
-    const productData = {
-      id,
-      name,
-      price,
-      description,
-    };
     await ProductService.create(productData);
     enqueueSnackbar("Added Successfully", {
       autoHideDuration: 3000,
@@ -90,28 +90,24 @@ const ProductList = () => {
 
   const handleEditSubmit = async (event) => {
     event.preventDefault();
-    console.log(typeof id);
 
-    const productData = {
-      id,
-      name,
-      price,
-      description,
-    };
-
-    await ProductService.update(id, productData);
+    await ProductService.update(selectedId, productData);
     enqueueSnackbar("Updated Successfully", {
       autoHideDuration: 3000,
       variant: "success",
     });
 
     setRefreshKey((oldKey) => oldKey + 1);
-    setOpenCreateProductModal(false);
+    setOpenEditProductModal(false);
   };
 
   const handleOpenCreateProductModal = () => setOpenCreateProductModal(true);
   const handleCloseCreateProductModal = () => setOpenCreateProductModal(false);
-  const handleOpenEditProductModal = () => setOpenEditProductModal(true);
+  const handleOpenEditProductModal = (id) => {
+    setOpenEditProductModal(true);
+    setSelectedId(id);
+  };
+
   const handleCloseEditProductModal = () => setOpenEditProductModal(false);
 
   return (
@@ -176,7 +172,7 @@ const ProductList = () => {
                   <Button
                     variant="outlined"
                     sx={{ mr: "5px" }}
-                    onClick={handleOpenEditProductModal}
+                    onClick={() => handleOpenEditProductModal(product.id)}
                   >
                     Edit
                   </Button>
@@ -197,95 +193,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
-// function productProps({
-//   open,
-//   handleClose,
-//   style,
-//   name,
-//   setName,
-//   price,
-//   setPrice,
-//   description,
-//   setDescription,
-//   handleSubmit,
-// }) {
-//   return (
-//     <Modal
-//       open={open}
-//       onClose={handleClose}
-//       aria-labelledby="modal-modal-title"
-//       aria-describedby="modal-modal-description"
-//     >
-//       <Box sx={style}>
-//         <Typography
-//           id="modal-modal-title"
-//           variant="h5"
-//           component="h2"
-//           sx={{
-//             marginBottom: "20px",
-//             textAlign: "center",
-//           }}
-//         >
-//           PRODUCT DETAILS
-//         </Typography>
-//         <Box component="form" noValidate autoComplete="off">
-//           <TextField
-//             required
-//             fullWidth
-//             value={name}
-//             onChange={(e) => setName(e.target.value)}
-//             id="product-name"
-//             label="Product Name"
-//             sx={{
-//               mb: "10px",
-//             }}
-//           />
-//           <TextField
-//             required
-//             fullWidth
-//             value={price}
-//             onChange={(e) => setPrice(e.target.value)}
-//             id="product-price"
-//             label="Price"
-//             type="number"
-//           />
-//           <TextareaAutosize
-//             aria-label="minimum height"
-//             minRows={4}
-//             placeholder="Enter product description.."
-//             value={description}
-//             onChange={(e) => setDescription(e.target.value)}
-//             style={{
-//               width: "100%",
-//               marginTop: "10px",
-//               border: "1px solid grey",
-//               borderRadius: "5px",
-//               padding: "10px",
-//               fontSize: "1.1em",
-//             }}
-//           />
-//           <Button
-//             variant="contained"
-//             sx={{
-//               mt: "10px",
-//             }}
-//             onClick={handleSubmit}
-//           >
-//             Submit
-//           </Button>
-//           <Button
-//             variant="outlined"
-//             sx={{
-//               mt: "10px",
-//               ml: "10px",
-//             }}
-//             onClick={handleClose}
-//           >
-//             Cancel
-//           </Button>
-//         </Box>
-//       </Box>
-//     </Modal>
-//   );
-// }
