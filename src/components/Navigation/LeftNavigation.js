@@ -78,14 +78,14 @@ const LeftNavigation = () => {
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding>
+          {/* <ListItem disablePadding>
             <ListItemButton onClick={() => navigate("/todolist")}>
               <ListItemIcon>
                 <Inventory2TwoTone />
               </ListItemIcon>
               <ListItemText primary={"To Do List"} />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
         </List>
 
         <Divider />
